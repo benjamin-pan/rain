@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>淋雨啦</title>
+	<meta charset="utf-8">
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<button onclick="star()">求平均</button><span id="getRains"></span>
+	<canvas id="sky"></canvas>
+	<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script type="text/javascript" src="sky.js"></script>
+	<script type="text/javascript" src="rain.js"></script>
+	<script>
+		var imgObj0 = new Image();
+		var imgObj1 = new Image();
+		var imgObj2 = new Image();
+		var imgObj3 = new Image();
+		var imgObj4 = new Image();
+    imgObj0.src = "1.png";
+    imgObj1.src = "2.png";
+    imgObj2.src = "3.png";
+    imgObj3.src = "4.png";
+    imgObj4.src = "5.png";
+    var walker=[imgObj0,imgObj1,imgObj2,imgObj3,imgObj4];
+		var i=0;
+		var walkerX=0;
+		var walkerTime;
+		var rains=0;
+		var step=0;
+		var getRainsArr=[];
+		var time=0;
+		function walk(){
+			walkerTime=setInterval(function(){
+				i=i%5;
+				clearSky();
+				if(walkerX>can.width){
+					finish();
+				}
+				ctx.drawImage(walker[i],walkerX+=step,can.height-250);
+				i++;
+			},100)
+		}
+		function finish(){
+			clearInterval(walkerTime);
+			clearInterval(rainTime);
+			var showRains=document.getElementById('getRains');
+
+			showRains.innerHTML=rains/time;
+		}
+	</script>
+	<script type="text/javascript">
+	var rainTime;
+	function star(){
+		time++;
+		walkerX=0;
+		var rain=new Rain();
+		rain.init();
+		walk();
+
+		rainTime=setInterval(function() {
+			rain.move();
+		},60)
+	}
+	</script>
+</body>
+</html>
